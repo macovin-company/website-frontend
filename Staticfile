@@ -1,0 +1,4 @@
+# Webpack production output. Used when Railway/Railpack serves this as a static SPA
+# (RAILPACK_SPA_OUTPUT_DIR=dist). Hash-router site; index fallback still helps.
+root: dist
+index_fallback: true

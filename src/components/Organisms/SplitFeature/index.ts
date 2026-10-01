@@ -1,0 +1,1 @@
+export { SplitFeature } from './component';

@@ -1,0 +1,226 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /*
+   * Comic print triad (process energy, not pastel SaaS):
+   *   primary   — comic yellow: CTAs, brand punches, flat fills
+   *   secondary — process cyan: eyebrows, panels, secondary chrome
+   *   tertiary  — comic red: links, small accents, tension hits
+   * Ink black for outlines / inverse. Paper white for surfaces.
+   * Complementary tension: yellow↔cyan, red as the hot accent.
+   */
+  --primary: 48 100% 50%;
+  --primary-soft: 48 100% 88%;
+  --primary-fg: 0 0% 6%;
+
+  --secondary: 196 100% 38%;
+  --secondary-soft: 196 70% 90%;
+  --secondary-fg: 0 0% 100%;
+
+  --tertiary: 2 86% 48%;
+  --tertiary-soft: 2 80% 93%;
+  --tertiary-fg: 0 0% 100%;
+
+  --surface: 48 40% 97%;
+  --surface-2: 48 35% 92%;
+  --surface-inverse: 0 0% 7%;
+  --ink: 0 0% 7%;
+  --ink-muted: 0 0% 32%;
+  --line: 0 0% 12%;
+  --focus: 196 100% 32%;
+
+  /* Legacy aliases */
+  --paper: 48 40% 97%;
+  --mist: 48 35% 92%;
+  --dusk: 0 0% 7%;
+  --ember: 48 100% 50%;
+  --path: 2 86% 48%;
+  --ridge: 0 0% 32%;
+  --soft: 0 0% 80%;
+
+  --text-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.84rem + 0.15vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.35rem + 2vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 1.5rem + 2.8vw, 3.25rem);
+  --text-5xl: clamp(2.75rem, 1.6rem + 4.2vw, 4.5rem);
+  --text-hero: clamp(3rem, 1.4rem + 6vw, 6rem);
+
+  --space-section: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  --measure: 65ch;
+  --ink-border: 3px;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--line) / 0.35);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-size: var(--text-base);
+    line-height: 1.65;
+    color: hsl(var(--ink));
+    background-color: hsl(var(--surface));
+  }
+
+  a {
+    @apply text-tertiary underline-offset-4 transition-colors hover:text-secondary;
+  }
+
+  :focus-visible {
+    outline: 3px solid hsl(var(--focus));
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-secondary;
+  }
+
+  .theme-rail {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--primary)) 0 33.33%,
+      hsl(var(--secondary)) 33.33% 66.66%,
+      hsl(var(--tertiary)) 66.66% 100%
+    );
+  }
+
+  .wordmark {
+    font-family: 'Alfa Slab One', 'Georgia', serif;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  /* Nav-scale wordmark: open tracking, ink underline tick for intentional mark */
+  .wordmark-nav {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.28rem;
+    letter-spacing: 0.06em;
+  }
+
+  .wordmark-nav::after {
+    content: '';
+    display: block;
+    width: 1.65rem;
+    height: 3px;
+    background: hsl(var(--secondary));
+    transition: width 120ms ease, background-color 120ms ease;
+  }
+
+  .wordmark-nav:hover::after {
+    width: 2.4rem;
+    background: hsl(var(--tertiary));
+  }
+
+  .panel {
+    border: var(--ink-border) solid hsl(var(--ink));
+    box-shadow: 4px 4px 0 hsl(var(--ink));
+  }
+
+  .panel-flat {
+    border: var(--ink-border) solid hsl(var(--ink));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .measure {
+    max-width: var(--measure);
+  }
+
+  /* Light print halftone — graphic, not noisy */
+  .bg-halftone {
+    background-image: radial-gradient(
+      hsl(var(--ink) / 0.12) 1.1px,
+      transparent 1.2px
+    );
+    background-size: 7px 7px;
+  }
+
+  .bg-grain {
+    background-color: hsl(var(--surface));
+    background-image:
+      radial-gradient(ellipse at 10% 0%, hsl(var(--primary) / 0.35), transparent 42%),
+      radial-gradient(ellipse at 90% 8%, hsl(var(--secondary) / 0.18), transparent 48%),
+      radial-gradient(hsl(var(--ink) / 0.06) 1px, transparent 1.1px);
+    background-size: auto, auto, 8px 8px;
+  }
+
+  .bg-band-dusk {
+    background: hsl(var(--surface-inverse));
+  }
+
+  .bg-band-secondary {
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-fg));
+  }
+
+  .bg-band-primary {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-fg));
+  }
+
+  .bg-atmosphere {
+    background-color: hsl(var(--surface-2));
+    background-image:
+      radial-gradient(ellipse 70% 50% at 0% 0%, hsl(var(--primary) / 0.4), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 100% 20%, hsl(var(--tertiary) / 0.12), transparent 50%),
+      radial-gradient(hsl(var(--ink) / 0.07) 1px, transparent 1.1px);
+    background-size: auto, auto, 8px 8px;
+  }
+
+  .chrome-glass {
+    background-color: hsl(var(--surface) / 0.95);
+    backdrop-filter: blur(8px);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .chrome-glass {
+      background-color: hsl(var(--surface));
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-up,
+  .animate-fade-up-delay,
+  .animate-fade-up-late,
+  .animate-ken-slow {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .motion-safe-hover {
+    transition: none !important;
+  }
+
+  .motion-safe-hover:hover {
+    transform: none !important;
+  }
+}
